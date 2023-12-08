@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, json
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 app = Flask(__name__)
@@ -30,8 +30,9 @@ class Property(db.Model):
     Fax = db.Column(db.String(10), nullable=True)
     def __repr__(self):
         return '<Task %r>' % self.id
-
-
+    
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 @app.route("/", methods=['POST', 'GET'])
 def index():
@@ -57,13 +58,21 @@ def index():
             db.session.commit()
             return redirect('/')
         except:
-            return 'There was an issue adding your task'
+            return 'There was an issue adding your property'
     else:
-        Properties = Property.query.order_by(Property.date_created).all()
-        return render_template('index.html', Properties=Properties)
+        return render_template('index.html')
     
     
-    
+@app.route('/api/properties')
+def properties():
+    Properties = Property.query.order_by(Property.date_created).all()
+
+    json_properties = []
+    for property in Properties:
+        json_properties.append(property.as_dict())
+
+    return json_properties
+
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
