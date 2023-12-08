@@ -14,7 +14,7 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
     
 
-class Properties(db.Model):
+class Property(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -23,7 +23,7 @@ class Properties(db.Model):
     Address_Line_2 = db.Column(db.String(200), nullable=False)
     City = db.Column(db.String(200), nullable=False)
     Zip = db.Column(db.Integer, nullable=False)
-    State = db.Column(db.String(50), nullable=False)
+    State = db.Column(db.String(2), nullable=False)
     Phone = db.Column(db.String(10), nullable=False)
     Phone2 = db.Column(db.String(10), nullable=True)
     Phone3 = db.Column(db.String(10), nullable=True)
@@ -36,18 +36,32 @@ class Properties(db.Model):
 @app.route("/", methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        task_content = request.form['content']
-        new_task = Todo(content=task_content)
+        Prop_Name = request.form['Name']
+        Prop_Street_Number = request.form['Street_Number']
+        Prop_Street_Name = request.form['Street_Name']
+        Prop_Address_Line_2 = request.form['Address_Line_2']
+        Prop_City = request.form['City']
+        Prop_State = request.form['State']
+        Prop_Phone = request.form['Phone']
+        Prop_Phone2 = request.form['Phone2']
+        Prop_Phone3 = request.form['Phone3']
+        Prop_Fax = request.form['Fax']
+        New_Property = Property(Name=Prop_Name, Street_Number=Prop_Street_Number,
+                                     Street_Name=Prop_Street_Name, Address_Line_2=Prop_Address_Line_2,
+                                     City=Prop_City, State=Prop_State, Phone=Prop_Phone,
+                                     Phone2=Prop_Phone2, Phone3=Prop_Phone3, Fax=Prop_Fax)
 
         try:
-            db.session.add(new_task)
+            db.session.add(New_Property)
             db.session.commit()
             return redirect('/')
         except:
             return 'There was an issue adding your task'
     else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasks=tasks)
+        Properties = Property.query.order_by(Property.date_created).all()
+        return render_template('index.html', Properties=Properties)
+    
+    
     
 @app.route('/delete/<int:id>')
 def delete(id):
