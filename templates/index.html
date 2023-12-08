@@ -23,11 +23,10 @@
         </tr>
         {% for Property in Properties %}
         <tr>
+                {% set Address = Property.Street_Number|string ~ ' ' ~ Property.Street_Name ~ '\n' ~ Property.Address_Line_2 ~ '\n' ~ Property.City ~ ', ' ~ Property.State ~ ' ' ~ Property.Zip|string %}
             <td>{{ Property.id}}</td>
             <td>{{ Property.Name }}</td>
-            <td>{{ Property.Street_Number|string + ' ' + Property.Street_Name + '\n'
-                 + Property.Address_Line_2 + '\n'
-                 + Property.City + ', ' + Property.State, + ' ' + Property.Zip|string}}</td>
+            <td>{{ Address}}</td>
             <td>{{ Property.Phone }}</td>
             <td>{{ Property.Fax }}</td>
         </tr>
