@@ -25,9 +25,9 @@
         <tr>
             <td>{{ Property.id}}</td>
             <td>{{ Property.Name }}</td>
-            <td>{{ Property.Street_Number + ' ' + Property.Street_Name + '\\n'
+            <td>{{ Property.Street_Number|string + ' ' + Property.Street_Name + '\n'
                  + Property.Address_Line_2 + '\n'
-                 + Property.City + ', ' + Property_State, + ' ' + Property.Zip}}</td>
+                 + Property.City + ', ' + Property.State, + ' ' + Property.Zip|string}}</td>
             <td>{{ Property.Phone }}</td>
             <td>{{ Property.Fax }}</td>
         </tr>
