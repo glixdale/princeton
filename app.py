@@ -49,7 +49,7 @@ def index():
         Prop_Fax = request.form['Fax']
         New_Property = Property(Name=Prop_Name, Street_Number=Prop_Street_Number,
                                      Street_Name=Prop_Street_Name, Address_Line_2=Prop_Address_Line_2,
-                                     City=Prop_City, State=Prop_State, Phone=Prop_Phone, Zip=Prop_Zip
+                                     City=Prop_City, State=Prop_State, Phone=Prop_Phone, Zip=Prop_Zip,
                                      Phone2=Prop_Phone2, Phone3=Prop_Phone3, Fax=Prop_Fax)
 
         try:
