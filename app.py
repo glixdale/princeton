@@ -41,6 +41,7 @@ def index():
         Prop_Street_Name = request.form['Street_Name']
         Prop_Address_Line_2 = request.form['Address_Line_2']
         Prop_City = request.form['City']
+        Prop_Zip = request.form['Zip']
         Prop_State = request.form['State']
         Prop_Phone = request.form['Phone']
         Prop_Phone2 = request.form['Phone2']
@@ -48,7 +49,7 @@ def index():
         Prop_Fax = request.form['Fax']
         New_Property = Property(Name=Prop_Name, Street_Number=Prop_Street_Number,
                                      Street_Name=Prop_Street_Name, Address_Line_2=Prop_Address_Line_2,
-                                     City=Prop_City, State=Prop_State, Phone=Prop_Phone,
+                                     City=Prop_City, State=Prop_State, Phone=Prop_Phone, Zip=Prop_Zip
                                      Phone2=Prop_Phone2, Phone3=Prop_Phone3, Fax=Prop_Fax)
 
         try:
