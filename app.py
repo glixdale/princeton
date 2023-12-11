@@ -73,9 +73,6 @@ def properties():
 
     return json_properties
 
-
-from flask import request, jsonify
-
 @app.route('/api/addproperties', methods=['POST', 'GET'])
 def create_property():
     if request.method == 'POST':
