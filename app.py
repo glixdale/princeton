@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, json
+from flask import Flask, render_template, url_for, request, redirect, json, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 app = Flask(__name__)
@@ -72,6 +72,48 @@ def properties():
         json_properties.append(property.as_dict())
 
     return json_properties
+
+
+from flask import request, jsonify
+
+@app.route('/api/addproperties', methods=['POST', 'GET'])
+def create_property():
+    if request.method == 'POST':
+        name = request.json['Name']
+        street_number = request.json['Street_Number']
+        street_name = request.json['Street_Name']
+        address_line_2 = request.json['Address_Line_2']
+        city = request.json['City']
+        zip_code = request.json['Zip']
+        state = request.json['State']
+        phone = request.json['Phone']
+        phone2 = request.json['Phone2']
+        phone3 = request.json['Phone3']
+        fax = request.json['Fax']
+
+        # Creating a new Property object
+        new_property = Property(
+            Name=name,
+            Street_Number=street_number,
+            Street_Name=street_name,
+            Address_Line_2=address_line_2,
+            City=city,
+            Zip=zip_code,
+            State=state,
+            Phone=phone,
+            Phone2=phone2,
+            Phone3=phone3,
+            Fax=fax
+        )
+
+        # Adding the new property to the database session
+        db.session.add(new_property)
+        db.session.commit()
+
+        return jsonify({'message': 'Property created successfully!'}), 201  # Return success message with HTTP status code 201
+    else:
+        return jsonify({'error': 'Method not allowed'}), 405  # Return error for unsupported methods
+
 
 @app.route('/delete/<int:id>')
 def delete(id):
